@@ -24,3 +24,41 @@ jobs:
 
             - name: Run Test
               run: npm run test
+
+            - name: Upload Coverage Report
+              uses: actions/upload-artifact@v3
+              if: always()
+              with:
+                  name: coverage-report
+                  path: coverage/
+    build:
+        name: Build Docker Image
+        needs: [test]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Cod
+              uses: actions/checkout@v3
+
+            - name: Setup Docker Buildx
+              uses: docker/setup-buildx-action@v2
+            - name: Build Docker Image
+              run: |
+                  docker run build -t task-manager: ${{github.sha}} .
+                  docker tag task-manager:${{ github.sha }} task-manager:latest
+
+            - name: Test Docker Image
+              run: |
+                  docker run -d -p 3000:3000 --name test-cotainer task-manager:latest
+                  sleep 5
+                  curl -f http://localhost:3000/api/health || exit 1
+                  docker stop test-container
+                  docker rm test-container
+
+            - name: Save Docker Image
+              run: docker save task-manager:latest | gzip > task-manager.tar.gz
+
+            - name: Upload Docker Image Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: docker-image
+                  path: task-manager.tar.gz
