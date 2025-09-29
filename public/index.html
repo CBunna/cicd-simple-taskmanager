@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - DevOps Practice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Task Manager</h1>
+            <p class="subtitle">DevOps Practice Project</p>
+        </header>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value" id="totalTasks">0</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completedTasks">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="pendingTasks">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completionRate">0%</div>
+                <div class="stat-label">Completion Rate</div>
+            </div>
+        </div>
+
+        <!-- Add Task Form -->
+        <div class="add-task-container">
+            <input 
+                type="text" 
+                id="taskInput" 
+                placeholder="Enter a new task..." 
+                class="task-input"
+            >
+            <button onclick="addTask()" class="btn btn-primary">Add Task</button>
+        </div>
+
+        <!-- Task List -->
+        <div class="tasks-container">
+            <h2>Your Tasks</h2>
+            <div id="tasksList" class="tasks-list">
+                <!-- Tasks will be rendered here -->
+            </div>
+            <div id="emptyState" class="empty-state">
+                <p>🎉 No tasks yet! Add one above to get started.</p>
+            </div>
+        </div>
+
+        <!-- Health Status -->
+        <div class="health-status">
+            <span id="healthStatus">⚪ Checking status...</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
